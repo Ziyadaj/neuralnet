@@ -35,5 +35,15 @@ jobs:
       working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
       # See https: //cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure
-    
+      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure --verbose
+        
+    - name: Display test output
+      if: failure()
+      run: |
+        for test_file in ${{github.workspace}}/build/test_*; do
+          if [ -f "$test_file" ]; then
+            echo "Output of $test_file:"
+            $test_file
+            echo "----------------------"
+          fi
+        done

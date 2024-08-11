@@ -18,12 +18,16 @@ add_library(neural_network ${SOURCE_FILES})
 # Link math library to the main library
 target_link_libraries(neural_network m)
 
-# Create the test executable
-add_executable(test_neural_network tests/forward_propagation.c)
-target_link_libraries(test_neural_network neural_network)
-
 # Enable testing
 enable_testing()
 
-# Add the test
-add_test(NAME NeuralNetworkTests COMMAND test_neural_network)
+# Function to add a test
+function(add_project_test test_name)
+    add_executable(${test_name} tests/${test_name}.c)
+    target_link_libraries(${test_name} your_library)
+    add_test(NAME ${test_name} COMMAND ${test_name})
+endfunction()
+
+# Add all test files
+add_project_test(test_forward_propagation)
+add_project_test(test_matrix_operations)
