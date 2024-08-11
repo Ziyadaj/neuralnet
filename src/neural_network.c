@@ -61,17 +61,28 @@ __attribute__((unused)) float loss_func(float **output, float **real, int n,
   }
   return loss;
 }
+float **grads(float **A, int n, int m) {
+  // get grads from chain rule
+}
 // need derivatives of dw, db
 // log loss -> w or b
 // dL/dw and dL/db and f'(z)
 // y*log(yhat) + * (1-y) * log(1-yhat)
 // yhat = f(z) = f(a * w + b)
+// f'(z) = 1-f(z) * f(z) (sigmoid)
+//
 // chain rule dL/da = dL/dz * dz/da
 // dL/da =
-__attribute__((unused)) void backprop(float **weights, float **bias, float lr,
-                                      int n, int k, int m) {
-  //  dw =
-  //   for (int i = 0; i < n; i++) { weights[i][j] -= dw }
+void backprop(float **weights, float **bias, float lr, int n, int k, int m) {
+  float **dw = create_matrix(n, m);
+  float **db = create_matrix(1, m);
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; i++) {
+
+      weights[i][j] -= lr * dw;
+      bias[0][j] -= lr * db;
+    }
+  }
 }
 
 void forward(float **x, int n, int k, int m) {
