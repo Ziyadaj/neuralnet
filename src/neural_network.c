@@ -42,12 +42,17 @@ float **rand_init(int n, int m) {
   return matrix;
 }
 // activation function
-float relu(float output) { return max(0, output); } // fmaxf
+__attribute__((unused))
+
+float relu(float output) {
+  return max(0, output);
+} // fmaxf
 float sigmoid(float z) { return 1 / (1 + exp(-z)); }
 
 // log loss
-float loss_func(float **output, float **real, int n, int m) {
-  float loss;
+__attribute__((unused)) float loss_func(float **output, float **real, int n,
+                                        int m) {
+  float loss = 0.0f;
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
       loss += real[i][j] * log(output[i][j]) +
@@ -63,7 +68,8 @@ float loss_func(float **output, float **real, int n, int m) {
 // yhat = f(z) = f(a * w + b)
 // chain rule dL/da = dL/dz * dz/da
 // dL/da =
-void backprop(float **weights, float **bias, float lr, int n, int k, int m) {
+__attribute__((unused)) void backprop(float **weights, float **bias, float lr,
+                                      int n, int k, int m) {
   //  dw =
   //   for (int i = 0; i < n; i++) { weights[i][j] -= dw }
 }
@@ -85,7 +91,7 @@ void forward(float **x, int n, int k, int m) {
     }
   }
 }
-void read_file(char name[]) {}
+__attribute__((unused)) void read_file(char name[]) {}
 
 #ifndef TESTING
 int main() {

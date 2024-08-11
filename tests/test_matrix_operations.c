@@ -181,7 +181,7 @@ static void test_1x1_broadcast_add() {
   bias[0][0] = 0.5;
   expected[0][0] = 5.5;
 
-  broadcast_add(m1, bias, result, 1, 1);
+  matadd(m1, bias, 1, 1);
 
   printf("1x1 Matrix Add Test: %s\n",
          matrices_equal(result, expected, 1, 1, 0.0001) ? "PASSED" : "FAILED");
@@ -205,7 +205,7 @@ static void test_zero_bias() {
   bias[0][0] = 0.0;
   bias[1][0] = 0.0;
 
-  add(m1, bias, 2, 2);
+  matadd(m1, bias, 2, 2);
 
   printf("Zero Bias Test: %s\n",
          matrices_equal(result, m1, 2, 2, 0.0001) ? "PASSED" : "FAILED");
@@ -219,7 +219,7 @@ int main() {
   test_2x3_3x2_multiplication();
   test_incompatible_matrices();
 
-  test_basic_broadcast_add();
+  test_basic_add();
   test_1x1_broadcast_add();
   test_zero_bias();
 

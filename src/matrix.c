@@ -34,9 +34,9 @@ void free_matrix(float **A, int n) {
     free(A[i]);
   }
   free(A);
-  A = NULL;
+  *A = NULL;
 }
-float **transpose(float **A, int rows, int cols) {
+__attribute__((unused)) float **transpose(float **A, int rows, int cols) {
   float **ptr = create_matrix(cols, rows);
   if (ptr == NULL) {
     return NULL;
