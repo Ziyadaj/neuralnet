@@ -86,6 +86,7 @@ void forward(float **x, int n, int k, int m) {
   }
 }
 void read_file(char name[]) {}
+
 #ifndef TESTING
 int main() {
   srand(time(NULL)); // random seed
