@@ -79,8 +79,8 @@ void backprop(float **weights, float **bias, float lr, int n, int k, int m) {
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; i++) {
 
-      weights[i][j] -= lr * dw;
-      bias[0][j] -= lr * db;
+      weights[i][j] -= lr * dw[i][j];
+      bias[0][j] -= lr * db[i][j];
     }
   }
 }
