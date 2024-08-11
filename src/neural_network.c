@@ -1,5 +1,4 @@
-#include "matmul.h"
-#include "matrix.h"
+#include "../include/matrix.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,55 +45,57 @@ float **rand_init(int n, int m) {
 float relu(float output) { return max(0, output); } // fmaxf
 float sigmoid(float z) { return 1 / (1 + exp(-z)); }
 
+// log loss
+float loss_func(float **output, float **real, int n, int m) {
+  float loss;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      loss += real[i][j] * log(output[i][j]) +
+              (1 - real[i][j]) * log(1 - output[i][j]);
+    }
+  }
+  return loss;
+}
+// need derivatives of dw, db
+// log loss -> w or b
+// dL/dw and dL/db and f'(z)
+// y*log(yhat) + * (1-y) * log(1-yhat)
+// yhat = f(z) = f(a * w + b)
+// chain rule dL/da = dL/dz * dz/da
+// dL/da =
+void backprop(float **weights, float **bias, float lr, int n, int k, int m) {
+  //  dw =
+  //   for (int i = 0; i < n; i++) { weights[i][j] -= dw }
+}
+
 void forward(float **x, int n, int k, int m) {
   // weight and bias initialization
   float **weights = rand_init(n, m);
-  float **bias = rand_init(m, 1);
-
-  printf("bias:\n");
-  print_matrix(bias, m, 1);
+  float **bias = zero_init(1, m);
 
   // forward pass
-  float **output = create_matrix(n, m);
+  float **output = create_matrix(k, m);
   output = matmul_naive(x, weights, output, k, n, n, m);
-  printf("matmul:\n");
-  print_matrix(output, n, m);
-  float **tr = transpose(bias, m, 1);
-  if (tr == NULL) {
-    // Handle error
-    printf("Null ptr at tr");
-    return;
-  }
-  float **bias_br = broadcast(tr, m, n, 1, m);
-  if (bias_br == NULL) {
-    // Handle error
-    printf("Null ptr at bias_br");
-    return;
-  }
-  printf("bias broadcast:\n");
-  print_matrix(bias_br, m, n);
-  output = matadd(output, bias_br, n, m);
-  printf("output:\n");
-  print_matrix(output, n, m);
+  float **bias_br = broadcast(bias, 1, k, m, m);
+  output = matadd(output, bias_br, k, m);
 
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < k; i++) {
     for (int j = 0; j < m; j++) {
       output[i][j] = sigmoid(output[i][j]);
     }
   }
-  printf("output:\n");
-  print_matrix(output, n, m);
 }
 void read_file(char name[]) {}
-
+#ifndef TESTING
 int main() {
   srand(time(NULL)); // random seed
   // dim setting
-  int features = 4, samples = 3, hidden_size = 5;
+  int features = 4, samples = 7, hidden_size = 5;
 
   // float --> 32bit decimal
 
   float **x = rand_init(samples, features);
-  forward(x, samples, features, hidden_size);
+  forward(x, features, samples, hidden_size);
   return 0;
 }
+#endif

@@ -10,6 +10,8 @@ float **transpose(float **A, int rows, int cols);
 void print_matrix(float **A, int rows, int cols);
 int matrices_equal(float **m1, float **m2, int rows, int cols, float epsilon);
 float **matadd(float **m1, float **m2, int n, int m);
+float **matmul_naive(float **A, float **B, float **result, int R1, int R2,
+                     int C1, int C2);
 
 float **create_matrix(int n, int m) {
   float **A = (float **)malloc(n * sizeof(float *));
@@ -86,6 +88,23 @@ float **matadd(float **A, float **B, int rows, int cols) {
     }
   }
   return C;
+}
+float **matmul_naive(float **A, float **B, float **result, int R1, int R2,
+                     int C1, int C2) {
+  if (R2 != C1) {
+    printf("unable to multiply: [%d, %d] * [%d, %d]\n", R1, C1, R2, C2);
+    return NULL;
+  }
+  for (int i = 0; i < R1; i++) {
+    for (int j = 0; j < C2; j++) {
+      result[i][j] = 0;
+
+      for (int k = 0; k < R2; k++) {
+        result[i][j] += A[i][k] * B[k][j];
+      }
+    }
+  }
+  return result;
 }
 void print_matrix(float **A, int rows, int cols) {
   printf("[%d, %d]\n", rows, cols);

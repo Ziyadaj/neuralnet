@@ -31,10 +31,10 @@ Copy./neuralnet
 
 ## Project Structure
 
-src/: Source files
-include/: Header files
-tests/: Test cases
-docs/: Documentation
+- src/: Source files
+- include/: Header files
+- tests/: Test cases
+- docs/: Documentation
 
 ## Contributing
 This is a personal project, but suggestions and discussions are welcome. Feel free to open an issue for major changes.
