@@ -13,8 +13,8 @@ set(SOURCE_FILES
 add_library(neural_network ${SOURCE_FILES})
 
 # Create the test executable
-add_executable(test_neural_network tests/forward_operations.c)
-target_link_library(test_neural_network neural_network)
+add_executable(test_neural_network tests/forward_propagation.c)
+target_link_libraries(test_neural_network neural_network)
 
 # Enable testing
 enable_testing()
